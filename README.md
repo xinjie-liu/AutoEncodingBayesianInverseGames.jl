@@ -9,7 +9,7 @@ To differentiate through a game solver, we analytically derive gradient from the
 <a href ="https://arxiv.org/abs/2402.08902"><img src="https://xinjie-liu.github.io/assets/img/liu2024wafr_teaser.png"></a>
 
 
-<a href ="https://xinjie-liu.github.io/assets/pdf/Liu2023learningPoster(full).pdf"><img src="https://xinjie-liu.github.io/assets/img/liu2024auto.png" width = "560" height = "396"></a>
+<a href ="https://xinjie-liu.github.io/assets/pdf/liu2024auto.pdf"><img src="https://xinjie-liu.github.io/assets/img/liu2024auto.png" width = "560" height = "396"></a>
 
 ## How to use
 
