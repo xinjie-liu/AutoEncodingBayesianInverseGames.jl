@@ -2,15 +2,17 @@
 
 A simulation script that runs different approaches in the traffic intersection example
 
+Simulation videos are stored in the "data/" folder
+
 ============================================================================================#
 
 function run_intersection_inference(; 
-    number_trials = 1, solver = nothing, num_player = 2, ego_agent_id = 1, 
+    number_trials = 3, solver = nothing, num_player = 2, ego_agent_id = 1, 
     lane_id_per_player = [10, 13],
     ll = 2.0, lw = 0.45, turn_radius = 0.3, # lane length, width, turning radius
     collision_radius = 0.08, max_velocity = 0.2, max_acceleration = 0.12, max_ϕ = π/4,
     collision_avoidance_coefficient = 400, hard_constraints = false, # collision avoidance costs and inequalities
-    rng = Random.MersenneTwister(1), horizon = 15, n_sim_steps = 76,
+    rng = Random.MersenneTwister(26), horizon = 15, n_sim_steps = 76,
     vector_size = 15, # number of position points that the ego keeps as observation
     turn_length = 1, # number of steps to take along the MPGP horizon
     max_grad_steps = 10, # max online gradient steps for MLE baseline
@@ -29,7 +31,7 @@ function run_intersection_inference(;
     environment = RoadwayEnvironment(vertices, roadway, lane_id_per_player, collision_radius)
     game = construct_game(num_player; min_distance = 2 * collision_radius, hard_constraints, 
         collision_avoidance_coefficient, environment, max_velocity, max_acceleration, max_ϕ, game_type = "intersection")
-    jldsave(root_folder*"game.jld2"; game)
+    # jldsave(root_folder*"game.jld2"; game)
     initial_state_set, goal_dataset, target_lane_distribution_opp = construct_intersection_dataset(game, horizon, 
         rng, num_player, ego_agent_id, collision_radius, number_trials; max_velocity, vertices)
     initial_state = initial_state_set[1]
@@ -42,7 +44,7 @@ function run_intersection_inference(;
         Vector((offset + 1):(offset + blocksizes(initial_state)[1][ego_agent_id]))
     end
     # the approaches to run; options: "GT", "B-PinE" (ours), "B-MAP" (ours), "R-MLE" (liu2023ral), "BP-MLE", "St-BP"
-    solver_string_lst = ["GT", "B-MAP", "R-MLE", "BP-MLE", "St-BP"]
+    solver_string_lst = ["GT", "B-PinE", "B-MAP", "R-MLE", "BP-MLE", "St-BP"]
     solver = @something(solver, MCPCoupledOptimizationSolver(game, horizon, blocksizes(goal_dataset[1], 1))) # public solver for the uncontrolled agents
     mcp_game = solver.mcp_game
 

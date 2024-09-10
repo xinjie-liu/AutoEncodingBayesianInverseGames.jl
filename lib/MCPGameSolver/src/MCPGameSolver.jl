@@ -25,13 +25,16 @@ using TrajectoryGamesBase:
     JointStrategy,
     RecedingHorizonStrategy,
     rollout,
-    ProductDynamics
-using LiftedTrajectoryGames: LiftedTrajectoryStrategy
+    ProductDynamics,
+    AbstractDynamics,
+    AbstractStrategy
+# using LiftedTrajectoryGames: LiftedTrajectoryStrategy
 using BlockArrays: Block, BlockVector, mortar, blocksizes
 using SparseArrays: sparse, blockdiag, findnz, spzeros
 using PATHSolver: PATHSolver
 using LinearAlgebra: I, norm_sqr, pinv, ColumnNorm, qr, norm
 using Random: Random
+using StatsBase: Weights, sample
 using ProgressMeter: ProgressMeter
 # using GLMakie: GLMakie
 using Symbolics: Symbolics, @variables, scalarize

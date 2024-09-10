@@ -166,7 +166,7 @@ function visualize_players!(
         player_color = player_i == ego_agent_id ? parse(Colorant, "rgba(238, 29, 37, $transparency)") : parse(Colorant, "rgba(46,139,87, $transparency)")
         position = Makie.@lift Makie.Point2f($players[Block(player_i)][1:2])
         rotation = Makie.@lift $players[Block(player_i)][4]
-        Makie.scatter!(axis, position; rotations = rotation, color = player_color, marker = load("media/car"*string(player_i)*".png"), markersize = 35)
+        Makie.scatter!(axis, position; rotation, color = player_color, marker = load("media/car"*string(player_i)*".png"), markersize = 35)
     end
 end
 

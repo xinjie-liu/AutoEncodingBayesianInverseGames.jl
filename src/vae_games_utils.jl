@@ -178,9 +178,9 @@ function plot_comparison_two_distributions(dataset1, dataset2)
     colors = [colorant"rgba(105, 105, 105, 0.008)", colorant"rgba(254, 38, 37, 0.008)"]
     ax1 = Axis(fig[1, 1], title=" ground truth vs. VAE-inferred objective distributions", 
         xlabel = "objective: x", ylabel = "objective: y", spinewidth=3)
-    Makie.scatter!(ax1, dataset1[1, :], dataset1[2, :], color = colors[1], strokearound = true, strokewidth = 5, 
+    Makie.scatter!(ax1, dataset1[1, :], dataset1[2, :], color = colors[1], strokewidth = 5, 
         strokecolor = colorant"rgba(105, 105, 105, 1.0)", label = "ground truth")
-    Makie.scatter!(ax1, dataset2[1, :], dataset2[2, :], color = colors[2], strokearound = true, strokewidth = 5, 
+    Makie.scatter!(ax1, dataset2[1, :], dataset2[2, :], color = colors[2], strokewidth = 5, 
         strokecolor = colorant"rgba(254, 38, 37, 1.0)", label = "ours")
     Makie.axislegend(ax1, position = :lt)
 

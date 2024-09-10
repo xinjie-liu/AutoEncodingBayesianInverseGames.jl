@@ -8,7 +8,7 @@ Functions for training a VAE using differentiable game solver in traffic interse
 #=================== generate data by running ground truth interaction simulation =======================#
 
 function run_intersection_data_collection(; 
-    number_trials = 1, solver = nothing, num_player = 2, ego_agent_id = 1, 
+    number_trials = 700, solver = nothing, num_player = 2, ego_agent_id = 1, 
     lane_id_per_player = [10, 13],
     ll = 2.0, lw = 0.6, turn_radius = 0.3, 
     collision_radius = 0.08, max_velocity = 0.2, max_acceleration = 0.12, max_ϕ = π/4,
@@ -19,7 +19,7 @@ function run_intersection_data_collection(;
     max_grad_steps = 10, # max online gradient steps for MLE
     root_folder = "data/",
     visual = false,
-    save = false,
+    save = true,
 )
 
     #=================================#
@@ -216,12 +216,11 @@ end
 #=================================== train VAE using generated data =========================#
 
 function train_generative_model_with_driving_data(;
-    set_up = construct_training_setup(; dataset_size = 700, episode_slicing_interval = 1)        
+    set_up = DrivingExample.construct_training_setup(; dataset_size = 700, episode_slicing_interval = 1)        
 )
     # training from scratch
     vae = setup_mcp_vae(set_up)
     # training a pretrained model
-    # vae = JLD2.load(set_up.root_folder * "mcp_vae.jld2")["vae"]
     # encoder = JLD2.load(set_up.root_folder * "encoder.jld2")["encoder"]
     # decoder = JLD2.load(set_up.root_folder * "decoder.jld2")["decoder"]
     # vae = setup_mcp_vae(set_up; encoder, decoder)
@@ -254,9 +253,10 @@ function train_mcp_vae!(vae::MCP_VAE; set_up)
         # save data, plot loss and learned distribution
         if epoch % 50 == 0
             # vae |> cpu
-            jldsave(set_up.root_folder * (now() |> string) * "encoder.jld2"; vae.encoder)
-            jldsave(set_up.root_folder * (now() |> string) * "decoder.jld2"; vae.decoder)
-            jldsave(set_up.root_folder * (now() |> string) * "mcp_vae.jld2"; vae)
+            @suppress begin # ignore warnings from JLD2
+                jldsave(set_up.root_folder * (now() |> string) * "encoder.jld2"; vae.encoder)
+                jldsave(set_up.root_folder * (now() |> string) * "decoder.jld2"; vae.decoder)
+            end
             # vae |> set_up.training_config.device
             fig = Makie.Figure()
             axis_val = Makie.Axis(fig[1, 1], title = "Test loss")
@@ -345,7 +345,7 @@ function (model::MCP_VAE)(x, ϵ)
         end
     end
     infeasible_percentage = 1- (sum(solver_statistics))/size(objectives)[2]
-    println("infeasible_percentage: ", infeasible_percentage)
+    # println("infeasible_percentage: ", infeasible_percentage)
 
     (; x̂, z, d)
 end

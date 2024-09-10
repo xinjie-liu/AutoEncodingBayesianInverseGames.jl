@@ -1,11 +1,11 @@
 module DrivingExample
 
-using MCPGameSolver: MCPGameSolver, MCPCoupledOptimizationSolver, WarmStartRecedingHorizonStrategy
+using MCPGameSolver: MCPGameSolver, MCPCoupledOptimizationSolver, WarmStartRecedingHorizonStrategy, LiftedTrajectoryStrategy
 using PATHSolver: PATHSolver
 using TrajectoryGamesBase: TrajectoryGamesBase, TrajectoryGame, rollout,
   GeneralSumCostStructure, ProductDynamics, TrajectoryGame, TimeSeparableTrajectoryGameCost, TrajectoryGameCost,
-  state_dim, control_dim, num_players, get_constraints, state_bounds, control_bounds
-using LiftedTrajectoryGames: LiftedTrajectoryStrategy
+  state_dim, control_dim, num_players, get_constraints, state_bounds, control_bounds, AbstractStrategy
+# using LiftedTrajectoryGames: LiftedTrajectoryStrategy
 using TrajectoryGamesExamples: TrajectoryGamesExamples, animate_sim_steps, planar_double_integrator, UnicycleDynamics,
   BicycleDynamics, create_environment_axis, time_invariant_linear_dynamics
 using DifferentiableTrajectoryOptimization: DifferentiableTrajectoryOptimization, ParametricTrajectoryOptimizationProblem,
@@ -42,16 +42,18 @@ using Dates: now
 using Clustering: Clustering, kmeans
 using ContingencyGames: ContingencyGames, ContingencyGame, setup_contingency_game_solver, solve_contingency_game
 using CairoMakie
+using Suppressor
 
-include("train_vae.jl")
-include("vae_games_utils.jl")
-include("general_utils.jl")
-include("game_definition/games.jl")
-include("baselines/mle.jl")
-include("simulation_script/intersection_inference.jl")
 include("traffic_infrastructure/infrastructure.jl")
 include("traffic_infrastructure/highway_roadway.jl")
 include("traffic_infrastructure/merging_roadway.jl")
 include("traffic_infrastructure/intersection_roadway.jl")
+include("game_definition/games.jl")
+include("baselines/mle.jl")
+include("vae_games_utils.jl")
+include("train_vae.jl")
+include("general_utils.jl")
+include("simulation_script/intersection_inference.jl")
+
 
 end # module
