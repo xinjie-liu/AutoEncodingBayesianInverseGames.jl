@@ -11,7 +11,7 @@ To differentiate through a game solver, we analytically derive gradient from the
 
 <a href ="https://xinjie-liu.github.io/assets/pdf/liu2024auto.pdf"><img src="https://xinjie-liu.github.io/assets/img/liu2024auto.png" width = "560" height = "396"></a>
 
-![wafr demo](https://xinjie-liu.github.io/assets/img/liu2024wafr_demo.gif){: width="600"}
+![wafr demo](https://xinjie-liu.github.io/assets/img/liu2024wafr_demo.gif){: width="300"}
 
 ## How to use
 
