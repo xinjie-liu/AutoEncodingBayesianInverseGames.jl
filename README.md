@@ -8,9 +8,7 @@ To differentiate through a game solver, we analytically derive gradient from the
 
 <a href ="https://arxiv.org/abs/2402.08902"><img src="https://xinjie-liu.github.io/assets/img/liu2024wafr_teaser.png"></a>
 
-<center>
-<a href ="https://xinjie-liu.github.io/assets/pdf/liu2024auto.pdf"><img src="https://xinjie-liu.github.io/assets/img/liu2024auto.png" width = "560" height = "396"></a>
-</center>
+
 
 <center>
   <img src="https://xinjie-liu.github.io/assets/img/liu2024wafr_demo.gif" alt="wafr demo" width="350" height="350">
@@ -62,6 +60,8 @@ The generated objects will be stored in the `data\` folder
 
 ## Cite this work
 
+
+
 ```
 @article{liu2024auto,
   title={Auto-Encoding Bayesian Inverse Games},
@@ -70,6 +70,10 @@ The generated objects will be stored in the `data\` folder
   year={2024}
 }
 ```
+
+<center>
+<a href ="https://xinjie-liu.github.io/assets/pdf/liu2024auto.pdf"><img src="https://xinjie-liu.github.io/assets/img/liu2024auto.png" width = "560" height = "396"></a>
+</center>
 
 ## Acknowledgements
 
@@ -84,6 +88,8 @@ This project adapts the following packages as libraries:
 This package uses PATH solver (via [PATHSolver.jl](https://github.com/chkwon/PATHSolver.jl)) under the hood. Larger-sized problems require to have a license key. By courtesy of Steven Dirkse, Michael Ferris, and Tudd Munson, temporary license keys are available free of charge. For more details about the license key, please consult [PATHSolver.jl](https://github.com/chkwon/PATHSolver.jl) (License section). 
 
 Note that when no license is loaded, PATH does **not** report an informative error and instead may just report a wrong result. Thus, please make sure that the license is loaded correctly before using the solver.
+
+
 
 ---
 
