@@ -4,7 +4,7 @@
 
 This repository contains code for our paper at WAFR 2024: [Auto-Encoding Bayesian Inverse Games](https://arxiv.org/pdf/2402.08902). We propose an **end-to-end differentiable** pipeline that embeds a **differentiable Nash game solver** into a **generative model** for multi-modal uncertainty inference in multi-agent scenarios. For more information, please visit our [project website](https://xinjie-liu.github.io/projects/bayesian-inverse-games/).
 
-To differentiate through a game solver, we analytically derive gradient from optimality conditions of the game based on the implicit function theorem. For more details, please refer to our [prior work](https://xinjie-liu.github.io/projects/game/). 
+To differentiate through a game solver, we analytically derive gradient from the optimality conditions of the game based on the implicit function theorem. For more details, please refer to our [prior work](https://xinjie-liu.github.io/projects/game/). 
 
 <a href ="https://arxiv.org/abs/2402.08902"><img src="https://xinjie-liu.github.io/assets/img/liu2024wafr_teaser.png"></a>
 
