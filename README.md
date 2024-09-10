@@ -8,13 +8,13 @@ To differentiate through a game solver, we analytically derive gradient from the
 
 <a href ="https://arxiv.org/abs/2402.08902"><img src="https://xinjie-liu.github.io/assets/img/liu2024wafr_teaser.png"></a>
 
-<div style="text-align: center;">
+<center>
 <a href ="https://xinjie-liu.github.io/assets/pdf/liu2024auto.pdf"><img src="https://xinjie-liu.github.io/assets/img/liu2024auto.png" width = "560" height = "396"></a>
-</div>
+</center>
 
-<div style="text-align: center;">
+<center>
   <img src="https://xinjie-liu.github.io/assets/img/liu2024wafr_demo.gif" alt="wafr demo" width="350" height="350">
-</div>
+</center>
 
 
 
