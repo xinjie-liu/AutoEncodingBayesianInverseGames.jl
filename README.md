@@ -34,13 +34,13 @@ To differentiate through a game solver, we analytically derive gradient from the
 
 ### Run simulation
 
-Run traffic intersection simulation with a pre-trained VAE model in the `data\` folder:
+Run traffic intersection simulation with a pre-trained VAE model in the `data/` folder:
 
 ```
 DrivingExample.run_intersection_inference()
 ```
 
-The generated videos will be stored in the `data\` folder 
+The generated videos will be stored in the `data/` folder 
 
 ### Run model training
 
@@ -56,7 +56,7 @@ Run VAE training:
 DrivingExample.train_generative_model_with_driving_data()
 ```
 
-The generated objects will be stored in the `data\` folder
+The generated objects will be stored in the `data/` folder
 
 ## Cite this work
 
