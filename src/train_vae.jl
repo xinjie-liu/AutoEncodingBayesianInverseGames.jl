@@ -216,7 +216,7 @@ end
 #=================================== train VAE using generated data =========================#
 
 function train_generative_model_with_driving_data(;
-    set_up = DrivingExample.construct_training_setup(; dataset_size = 700, episode_slicing_interval = 1)        
+    set_up = DrivingExample.construct_training_setup(; dataset_size = 2000, episode_slicing_interval = 1)        
 )
     # training from scratch
     vae = setup_mcp_vae(set_up)
@@ -416,16 +416,16 @@ end
 
 #============================= construct training dataset from simulated interaction and normalize the dataset ============================#
 
-function construct_training_setup(; root_folder = "data/", dataset_size = 2000,
+function construct_training_setup(; root_folder = "data/carla/", dataset_size = 2000,
     num_player = 2,
     ego_agent_id = 1,
     number_trials = 1,
-    ll = 2.0, 
-    lw = 0.6, 
-    turn_radius = 0.3, 
-    collision_radius = 0.08, 
-    max_velocity = 0.2, 
-    max_acceleration = 0.12, 
+    ll = 5.0, 
+    lw = 1.1, 
+    turn_radius = 0.5, 
+    collision_radius = 0.23, 
+    max_velocity = 0.15, 
+    max_acceleration = 0.09, 
     max_ϕ = π/4, 
     collision_avoidance_coefficient = 400,
     hard_constraints = false, # collision avoidance inequalities
