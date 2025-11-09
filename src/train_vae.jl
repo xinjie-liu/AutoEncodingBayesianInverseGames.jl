@@ -216,7 +216,7 @@ end
 #=================================== train VAE using generated data =========================#
 
 function train_generative_model_with_driving_data(;
-    set_up = DrivingExample.construct_training_setup(; dataset_size = 2000, episode_slicing_interval = 1)        
+    set_up = DrivingExample.construct_training_setup(; dataset_size = 600, episode_slicing_interval = 1)        
 )
     # training from scratch
     vae = setup_mcp_vae(set_up)
@@ -444,7 +444,7 @@ function construct_training_setup(; root_folder = "data/carla/", dataset_size = 
         device = cpu,
         optimizer = Flux.Optimiser(Flux.ClipValue(50), Adam(0.0002))
     )
-    trajectories = JLD2.load(root_folder * "intersection_dataset.jld2")["intersection_dataset"][1:dataset_size]
+    trajectories = JLD2.load(root_folder * "carla_intersection_dataset.jld2")["intersection_dataset"][1:dataset_size]
     gt_goals = JLD2.load(root_folder * "goal_dataset.jld2")["goal_dataset"][1:dataset_size]
 
     # mcp_game = JLD2.load(root_folder * "mcp_game.jld2")["mcp_game"]
@@ -487,8 +487,8 @@ function construct_training_setup(; root_folder = "data/carla/", dataset_size = 
     gt_goals = mapreduce(vcat, 1:length(gt_goals)) do ii
         repeat([gt_goals[ii]], outer = length(trajectory_slices_indices))
     end
-    training_data_idx = 1:Int(length(initial_states) * 0.8) |> Vector
-    test_data_idx = (Int(length(initial_states) * 0.8) + 1):length(initial_states) |> Vector
+    training_data_idx = 1:Int(length(initial_states) * 0.9) |> Vector
+    test_data_idx = (Int(length(initial_states) * 0.9) + 1):length(initial_states) |> Vector
     if shuffle
         Random.shuffle!(rng, training_data_idx)
         Random.shuffle!(rng, test_data_idx)
