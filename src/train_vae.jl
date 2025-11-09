@@ -219,11 +219,11 @@ function train_generative_model_with_driving_data(;
     set_up = DrivingExample.construct_training_setup(; dataset_size = 600, episode_slicing_interval = 1)        
 )
     # training from scratch
-    vae = setup_mcp_vae(set_up)
+    # vae = setup_mcp_vae(set_up)
     # training a pretrained model
-    # encoder = JLD2.load(set_up.root_folder * "encoder.jld2")["encoder"]
-    # decoder = JLD2.load(set_up.root_folder * "decoder.jld2")["decoder"]
-    # vae = setup_mcp_vae(set_up; encoder, decoder)
+    encoder = JLD2.load(set_up.root_folder * "encoder.jld2")["encoder"]
+    decoder = JLD2.load(set_up.root_folder * "decoder.jld2")["decoder"]
+    vae = setup_mcp_vae(set_up; encoder, decoder)
     Flux.trainmode!(vae)
     train_mcp_vae!(vae; set_up)
     Flux.testmode!(vae)
@@ -424,8 +424,8 @@ function construct_training_setup(; root_folder = "data/carla/", dataset_size = 
     lw = 1.1, 
     turn_radius = 0.5, 
     collision_radius = 0.23, 
-    max_velocity = 0.15, 
-    max_acceleration = 0.09, 
+    max_velocity = 0.45, 
+    max_acceleration = 0.27, 
     max_ϕ = π/4, 
     collision_avoidance_coefficient = 400,
     hard_constraints = false, # collision avoidance inequalities
