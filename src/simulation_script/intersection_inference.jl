@@ -9,17 +9,17 @@ Simulation videos are stored in the "data/" folder
 function run_intersection_inference(; 
     number_trials = 3, solver = nothing, num_player = 2, ego_agent_id = 1, 
     lane_id_per_player = [10, 13],
-    ll = 2.0, lw = 0.45, turn_radius = 0.3, # lane length, width, turning radius
-    collision_radius = 0.08, max_velocity = 0.2, max_acceleration = 0.12, max_ϕ = π/4,
+    ll = 5.0, lw = 1.1, turn_radius = 0.5, # lane length, width, turning radius
+    collision_radius = 0.23, max_velocity = 0.45, max_acceleration = 0.27, max_ϕ = π/4,
     collision_avoidance_coefficient = 400, hard_constraints = false, # collision avoidance costs and inequalities
-    rng = Random.MersenneTwister(26), horizon = 15, n_sim_steps = 76,
+    rng = Random.MersenneTwister(26), horizon = 15, n_sim_steps = 70,
     vector_size = 15, # number of position points that the ego keeps as observation
     turn_length = 1, # number of steps to take along the MPGP horizon
     max_grad_steps = 10, # max online gradient steps for MLE baseline
     lr = 2.1e-2, # step size for graident descent of MLE baseline
     root_folder = "data/",
     save = false,
-    training_dataset_size = 700, #argument for loading training data set to get normalization factors
+    training_dataset_size = 600, #argument for loading training data set to get normalization factors
     episode_slicing_interval = 1, 
 )
 
@@ -44,7 +44,7 @@ function run_intersection_inference(;
         Vector((offset + 1):(offset + blocksizes(initial_state)[1][ego_agent_id]))
     end
     # the approaches to run; options: "GT", "B-PinE" (ours), "B-MAP" (ours), "R-MLE" (liu2023ral), "BP-MLE", "St-BP"
-    solver_string_lst = ["GT", "B-PinE", "B-MAP", "R-MLE", "BP-MLE", "St-BP"]
+    solver_string_lst = ["GT"]
     solver = @something(solver, MCPCoupledOptimizationSolver(game, horizon, blocksizes(goal_dataset[1], 1))) # public solver for the uncontrolled agents
     mcp_game = solver.mcp_game
 
@@ -121,7 +121,7 @@ function run_intersection_inference(;
                 time_exec_opponents = @elapsed strategy = solve_game_with_resolve!(receding_horizon_strategy, game, system_state)
                 #===========================================================#
                 # player 2 infers player 1's objective and plans its motion
-                if t-1 < vector_size && solver_string != "GT"
+                if t-1 < vector_size
                     if solver_string == "B-PinE"
                         time_exec = @elapsed initial_belief = prior_belief_from_vae(vae; number_of_hypotheses, system_state, ll, lw, rng, visualization, extra_viz)
                         contingency_solution = solve_contingency_game_with_warm_start(; contingency_game_solver, contingency_game, initial_belief, last_solution)                        
@@ -210,6 +210,9 @@ function run_intersection_inference(;
                         predicted_opponents_trajectory = strategy_ego.substrategies[opponents_id]     
                     elseif solver_string == "GT"
                         #=================================# # ground truth (game-theoretic interaction in a centralized fashion)
+                        information_vector = reduce(vcat, xs_observation)
+                        reduced_observation = extract_observation(xs_observation; ego_agent_id, num_player, observation_dim = 3)
+                        initial_belief = posterior_belief_from_vae(vae; set_up, number_of_hypotheses = 2, system_state, ll, lw, rng, xs_observation = reduced_observation, visualization, extra_viz)
                         time_exec = time_exec_opponents
                         goal_estimation = goal
                         predicted_opponents_trajectory = strategy.substrategies[opponents_id]
